@@ -1,0 +1,15 @@
+NeuroPOMDP 0.1.0
+Frozen: True
+Executable: D:\NeuroPOMDP\dist\NeuroPOMDP\NeuroPOMDP.exe
+MEIPASS: D:\NeuroPOMDP\dist\NeuroPOMDP\_internal
+cwd: D:\NeuroPOMDP
+launcher.py: D:\NeuroPOMDP\dist\NeuroPOMDP\_internal\launcher.py
+runtime log: C:\Users\tamer\AppData\Local\NeuroPOMDP\launcher.log
+bootstrap script dir: C:\Users\tamer\AppData\Local\NeuroPOMDP
+Streamlit: OK (1.63.0)
+JAX: OK (0.11.1)
+NumPy: OK (2.5.3)
+Matplotlib: OK (3.11.2)
+Dashboard: OK (D:\NeuroPOMDP\dist\NeuroPOMDP\_internal\neuropomdp\dashboard\app.py)
+Port binding: OK (56942)
+Bootstrap script: OK (C:\Users\tamer\AppData\Local\Temp\NeuroPOMDP\streamlit_bootstrap_7dda4596eb0147bc9ea34cc86e3073ff.py)
