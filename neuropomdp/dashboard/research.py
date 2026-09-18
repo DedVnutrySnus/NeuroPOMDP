@@ -82,12 +82,12 @@ def _render_episode_analysis(episode: EpisodeResult) -> None:
     if episode.beliefs:
         chart_columns = st.columns(3)
         with chart_columns[0]:
-            st.pyplot(build_hidden_state_figure(episode), use_container_width=True)
+            st.pyplot(build_hidden_state_figure(episode), width="stretch")
         with chart_columns[1]:
-            st.pyplot(build_entropy_figure(episode), use_container_width=True)
+            st.pyplot(build_entropy_figure(episode), width="stretch")
         with chart_columns[2]:
             confidence = [float(max(belief)) for belief in episode.beliefs]
-            st.line_chart({"Confidence": confidence}, use_container_width=True)
+            st.line_chart({"Confidence": confidence}, width="stretch")
 
         entropy_values = [float(value) for value in episode.posterior_entropies]
         uncertainty_reduction = (
@@ -119,7 +119,7 @@ def _render_reward_analysis(episode: EpisodeResult) -> None:
         return
 
     cumulative = np.cumsum(rewards).tolist()
-    st.line_chart({"Reward": rewards, "Cumulative reward": cumulative}, use_container_width=True)
+    st.line_chart({"Reward": rewards, "Cumulative reward": cumulative}, width="stretch")
     columns = st.columns(2)
     with columns[0]:
         st.metric("Total reward", format_float(float(episode.total_reward)))
@@ -140,7 +140,7 @@ def _render_policy_analysis(episode: EpisodeResult) -> None:
         action_label(action): count for action, count in sorted(action_counts.items())
     }
     st.subheader("Action frequency")
-    st.bar_chart(frequency_data, use_container_width=True)
+    st.bar_chart(frequency_data, width="stretch")
 
     st.subheader("Selected actions")
     st.write(" → ".join(action_label(int(action)) for action in episode.actions))
@@ -151,7 +151,7 @@ def _render_policy_analysis(episode: EpisodeResult) -> None:
         st.subheader("Average action probabilities")
         st.bar_chart(
             {action_label(index): float(value) for index, value in enumerate(averages)},
-            use_container_width=True,
+            width="stretch",
         )
     else:
         st.info(_NOT_AVAILABLE)
@@ -182,7 +182,7 @@ def _render_timeline(episode: EpisodeResult) -> None:
         st.write("Belief state")
         st.bar_chart(
             {f"State {index}": float(value) for index, value in enumerate(belief)},
-            use_container_width=True,
+            width="stretch",
         )
     else:
         st.info(_NOT_AVAILABLE)
@@ -208,7 +208,7 @@ def _render_result_summary(result: BenchmarkResult | SweepResult) -> None:
                 }
                 for summary in summaries
             ],
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
     else:
@@ -223,7 +223,7 @@ def _render_result_summary(result: BenchmarkResult | SweepResult) -> None:
                 ]
                 for index, agent_name in enumerate(result.agent_names)
             },
-            use_container_width=True,
+            width="stretch",
         )
 
 

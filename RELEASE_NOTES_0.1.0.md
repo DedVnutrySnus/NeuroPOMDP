@@ -31,6 +31,18 @@ The release has been validated with fresh project checks:
 - Dashboard runtime loads without import failures
 - Bootstrap/runtime dependencies are resolved in the frozen application bundle
 
+## Multi-seed research validation
+
+A five-seed validation run (`0 1 2 3 4`) was completed with 8 episodes per
+seed and an episode length of 3. The ablation results were:
+
+- Active Inference: mean reward `0.62`, 95% CI `0.507 .. 0.733`, success rate `92.5%`
+- No epistemic baseline: mean reward `0.21`, 95% CI `-0.047 .. 0.467`, success rate `62.5%`
+
+The observation-noise sweep confirmed a reliable positive Active Inference
+reward and success advantage at noise levels `0.05` and `0.15`. The validation
+artifacts are stored under `outputs/research_validation/`.
+
 ## Windows usage
 
 1. Extract the archive.

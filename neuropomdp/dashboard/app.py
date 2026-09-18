@@ -436,13 +436,13 @@ def _render_demo(result, config: BenchmarkConfig, model, show_plots: bool) -> No
     with right:
         if show_plots:
             fig = build_value_comparison_figure(step)
-            st.pyplot(fig, clear_figure=False, use_container_width=True)
+            st.pyplot(fig, clear_figure=False, width="stretch")
             st.download_button(t("download_value_figure"), figure_to_png_bytes(fig), "demo_values.png", mime="image/png")
             efe_fig = build_efe_figure(step)
-            st.pyplot(efe_fig, clear_figure=False, use_container_width=True)
+            st.pyplot(efe_fig, clear_figure=False, width="stretch")
             st.download_button(t("download_efe_figure"), figure_to_png_bytes(efe_fig), "demo_efe.png", mime="image/png")
             probability_fig = build_action_probability_figure(step)
-            st.pyplot(probability_fig, clear_figure=False, use_container_width=True)
+            st.pyplot(probability_fig, clear_figure=False, width="stretch")
             st.download_button(t("download_probability_figure"), figure_to_png_bytes(probability_fig), "demo_action_probabilities.png", mime="image/png")
 
     if show_plots:
@@ -453,11 +453,11 @@ def _render_demo(result, config: BenchmarkConfig, model, show_plots: bool) -> No
         actions_fig = build_actions_figure(episode)
         chart_cols = st.columns(3)
         with chart_cols[0]:
-            st.pyplot(belief_fig, use_container_width=True)
+            st.pyplot(belief_fig, width="stretch")
         with chart_cols[1]:
-            st.pyplot(entropy_fig, use_container_width=True)
+            st.pyplot(entropy_fig, width="stretch")
         with chart_cols[2]:
-            st.pyplot(actions_fig, use_container_width=True)
+            st.pyplot(actions_fig, width="stretch")
         download_cols = st.columns(3)
         with download_cols[0]:
             st.download_button(t("download_beliefs_figure"), figure_to_png_bytes(belief_fig), "demo_beliefs.png", mime="image/png")
@@ -493,14 +493,14 @@ def _render_benchmark(result, show_plots: bool) -> None:
         info_fig = _benchmark_info_figure(result)
         top_cols = st.columns(2)
         with top_cols[0]:
-            st.pyplot(reward_fig, use_container_width=True)
+            st.pyplot(reward_fig, width="stretch")
         with top_cols[1]:
-            st.pyplot(action_fig, use_container_width=True)
+            st.pyplot(action_fig, width="stretch")
         bottom_cols = st.columns(2)
         with bottom_cols[0]:
-            st.pyplot(entropy_fig, use_container_width=True)
+            st.pyplot(entropy_fig, width="stretch")
         with bottom_cols[1]:
-            st.pyplot(info_fig, use_container_width=True)
+            st.pyplot(info_fig, width="stretch")
         download_cols = st.columns(4)
         with download_cols[0]:
             st.download_button(t("reward_figure"), figure_to_png_bytes(reward_fig), "benchmark_reward.png", mime="image/png")
@@ -543,7 +543,7 @@ def _render_ablation(result, show_plots: bool) -> None:
         fig = _ablation_figure(result)
         chart_col = st.columns([0.12, 0.76, 0.12])[1]
         with chart_col:
-            st.pyplot(fig, use_container_width=True)
+            st.pyplot(fig, width="stretch")
         st.download_button(t("download_ablation_figure"), figure_to_png_bytes(fig), "ablation_comparison.png", mime="image/png")
 
 def _render_sweep(result, show_plots: bool) -> None:
@@ -560,9 +560,9 @@ def _render_sweep(result, show_plots: bool) -> None:
         info_fig = _sweep_info_figure(result)
         chart_cols = st.columns(2)
         with chart_cols[0]:
-            st.pyplot(reward_fig, use_container_width=True)
+            st.pyplot(reward_fig, width="stretch")
         with chart_cols[1]:
-            st.pyplot(info_fig, use_container_width=True)
+            st.pyplot(info_fig, width="stretch")
         download_cols = st.columns(2)
         with download_cols[0]:
             st.download_button(t("download_sweep_reward_figure"), figure_to_png_bytes(reward_fig), "sweep_reward.png", mime="image/png")
@@ -596,13 +596,13 @@ def _render_model_inspection(config: BenchmarkConfig, model) -> None:
             [state_display(index) for index in range(model.A.shape[1])],
             t("chart_likelihood_matrix"),
         )
-        st.pyplot(fig_a, use_container_width=True)
+        st.pyplot(fig_a, width="stretch")
         st.markdown(t("c_preferences"))
         fig_c = build_model_vector_figure(np.asarray(model.C), [observation_display(index) for index in range(model.C.shape[0])], t("chart_preference_vector"), t("chart_preference"))
-        st.pyplot(fig_c, use_container_width=True)
+        st.pyplot(fig_c, width="stretch")
         st.markdown(t("d_prior"))
         fig_d = build_model_vector_figure(np.asarray(model.D), [state_display(index) for index in range(model.D.shape[0])], t("chart_prior_vector"), t("chart_probability"))
-        st.pyplot(fig_d, use_container_width=True)
+        st.pyplot(fig_d, width="stretch")
 
         action_index = st.selectbox(
             t("transition_matrix_for_action"),
@@ -615,7 +615,7 @@ def _render_model_inspection(config: BenchmarkConfig, model) -> None:
             [state_display(index) for index in range(model.B.shape[2])],
             t("transition_matrix_b_for_action", action=action_display(action_index)),
         )
-        st.pyplot(fig_b, use_container_width=True)
+        st.pyplot(fig_b, width="stretch")
 
 
 def _render_metrics(metrics: list[tuple[str, str]]) -> None:

@@ -138,6 +138,6 @@ def render_history_page(history_dir: str | Path | None = None) -> None:
     selected_records = [record for record in records if record.get("run_id") in selected_ids]
     comparison_rows = compare_runs(selected_records)
     if comparison_rows:
-        st.dataframe(comparison_rows, use_container_width=True, hide_index=True)
+        st.dataframe(comparison_rows, width="stretch", hide_index=True)
     else:
         st.info(t("history_no_metrics"))

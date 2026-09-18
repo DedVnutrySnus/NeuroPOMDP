@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project-specific local environments and artifacts
+.build-venv/
+release_smoke/
+outputs/
+outputs_*/
