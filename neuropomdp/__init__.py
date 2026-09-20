@@ -6,7 +6,7 @@ for a partially observable decision-making benchmark.
 
 from __future__ import annotations
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .agent import ActiveInferenceAgent
 from .benchmark import benchmark_agents

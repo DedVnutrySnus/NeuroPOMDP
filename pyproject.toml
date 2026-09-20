@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neuropomdp"
+version = "0.1.1"
+description = "A compact discrete Active Inference benchmark for partially observable decision-making."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+    { name = "DedVnutrySnus" }
+]
+keywords = [
+    "active-inference",
+    "pomdp",
+    "expected-free-energy",
+    "bayesian-inference",
+    "reinforcement-learning",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "jax>=0.4.30",
+    "jaxlib>=0.4.30",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "matplotlib>=3.8",
+    "streamlit>=1.32",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+build = [
+    "pyinstaller>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/DedVnutrySnus/NeuroPOMDP"
+Repository = "https://github.com/DedVnutrySnus/NeuroPOMDP"
+Issues = "https://github.com/DedVnutrySnus/NeuroPOMDP/issues"
+
+[project.scripts]
+neuropomdp = "neuropomdp.main:main"
+neuropomdp-dashboard = "neuropomdp.launcher:main"
+
+[tool.setuptools.packages.find]
+include = ["neuropomdp*"]

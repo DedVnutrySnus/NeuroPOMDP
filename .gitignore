@@ -222,3 +222,5 @@ __marimo__/
 release_smoke/
 outputs/
 outputs_*/
+diag_*.txt
+dist_diag.txt

@@ -56,9 +56,9 @@ If startup fails:
 1. Confirm Windows Defender or another security tool is not blocking the executable.
 2. Check whether another NeuroPOMDP instance is already running.
 3. Rebuild after deleting `build\` and `dist\` if a previous build was interrupted.
-4. Run `dist\NeuroPOMDP\NeuroPOMDP.exe` from `cmd.exe` to capture any launcher error message.
+4. Run `dist\NeuroPOMDP\NeuroPOMDP.exe --diagnose` and inspect `%LOCALAPPDATA%\NeuroPOMDP\launcher.log`.
 
-If the browser does not open automatically, the local dashboard is usually still available at the localhost URL printed by the launcher.
+If the browser does not open automatically, check `%LOCALAPPDATA%\NeuroPOMDP\launcher.log` for the selected localhost port.
 
 ## Release ZIP
 
@@ -66,9 +66,9 @@ To create a release archive, zip the entire `dist\NeuroPOMDP\` directory:
 
 ```text
 NeuroPOMDP.zip
-  └── NeuroPOMDP\
-      ├── NeuroPOMDP.exe
-      └── bundled runtime files
+  `-- NeuroPOMDP\
+      |-- NeuroPOMDP.exe
+      `-- bundled runtime files
 ```
 
 Distribute the ZIP, not the individual executable.

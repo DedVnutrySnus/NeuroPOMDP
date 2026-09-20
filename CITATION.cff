@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: NeuroPOMDP
+message: "If you use NeuroPOMDP in research or experiments, please cite this software."
+type: software
+authors:
+  - name: DedVnutrySnus
+repository-code: "https://github.com/DedVnutrySnus/NeuroPOMDP"
+version: 0.1.1
+license: MIT

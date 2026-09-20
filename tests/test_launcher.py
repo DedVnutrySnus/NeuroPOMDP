@@ -64,7 +64,11 @@ def test_normal_launch_opens_browser_after_server_readiness(monkeypatch, tmp_pat
         "_wait_for_server",
         lambda child, url, timeout: (
             events.append("readiness")
-            or launcher.ReadinessResult(ready=True, http_status=200, tcp_ready=True)
+            or launcher.ReadinessResult(
+                ready=True,
+                http_status=200,
+                tcp_ready=True,
+            )
         ),
     )
     monkeypatch.setattr(launcher, "_install_signal_handlers", lambda cleanup: None)

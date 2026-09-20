@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PyInstaller.utils.hooks import collect_all, collect_dynamic_libs, collect_submodules
+from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs, collect_submodules, copy_metadata
 
 
 try:
@@ -28,23 +28,19 @@ datas: list[tuple[str, str]] = []
 binaries: list[tuple[str, str]] = []
 hiddenimports: list[str] = []
 
-for package in ("streamlit", "matplotlib", "numpy", "scipy", "pandas", "pyarrow", "altair", "pydeck", "watchdog"):
-    package_datas, package_binaries, package_hiddenimports = collect_all(package)
-    _unique_extend(datas, package_datas)
-    _unique_extend(binaries, package_binaries)
-    _unique_extend(hiddenimports, package_hiddenimports)
+for package in ("streamlit", "altair", "pydeck"):
+    _unique_extend(datas, collect_data_files(package, include_py_files=False))
+    _unique_extend(datas, copy_metadata(package))
 
 for package in ("jax", "jaxlib"):
-    _unique_extend(hiddenimports, collect_submodules(package))
     _unique_extend(binaries, collect_dynamic_libs(package))
 
 _unique_extend(
     hiddenimports,
-    [
-        "neuropomdp.dashboard.app",
-        "neuropomdp.dashboard.components",
-        "neuropomdp.dashboard.formatting",
-        "neuropomdp.dashboard.state",
+    collect_submodules("neuropomdp")
+    + collect_submodules("streamlit")
+    + [
+        "streamlit.web.bootstrap",
     ],
 )
 
@@ -57,7 +53,14 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=[
+        "matplotlib.tests",
+        "numpy.tests",
+        "pandas.tests",
+        "pyarrow.tests",
+        "pytest",
+        "scipy.tests",
+    ],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=None,
