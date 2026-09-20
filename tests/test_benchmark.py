@@ -4,6 +4,7 @@ from dataclasses import replace
 
 import numpy as np
 
+import neuropomdp.main as cli_main
 from neuropomdp.benchmark import (
     aggregate_benchmark_results,
     benchmark_agents,
@@ -202,4 +203,17 @@ def test_cli_multi_seed_sweep_writes_effect_summary(tmp_path) -> None:
     assert effect_path.exists()
     effect = effect_path.read_text(encoding="utf-8")
     assert "reliably_reward_better_noise_values" in effect
+
+
+def test_cli_dashboard_delegates_to_launcher(monkeypatch) -> None:
+    calls: list[str] = []
+
+    def fake_run_dashboard() -> int:
+        calls.append("dashboard")
+        return 0
+
+    monkeypatch.setattr(cli_main, "_run_dashboard", fake_run_dashboard)
+
+    assert cli_main.main(["dashboard"]) == 0
+    assert calls == ["dashboard"]
 

@@ -197,6 +197,12 @@ def _run_sweep(config: BenchmarkConfig, seeds: list[int] | None = None) -> None:
     print(f"Sweep completed for {len(result.noise_values)} noise settings.")
 
 
+def _run_dashboard() -> int:
+    from . import launcher
+
+    return launcher.main([])
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Create the CLI parser."""
 
@@ -207,6 +213,7 @@ def build_parser() -> argparse.ArgumentParser:
     benchmark = subparsers.add_parser("benchmark")
     ablation = subparsers.add_parser("ablation")
     sweep = subparsers.add_parser("sweep")
+    subparsers.add_parser("dashboard")
     for subparser in (demo, benchmark, ablation, sweep):
         _add_common_arguments(subparser)
     benchmark.add_argument(
@@ -235,6 +242,9 @@ def main(argv: list[str] | None = None) -> int:
 
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.command == "dashboard":
+        return _run_dashboard()
+
     config = _build_config(args)
     if config.env.model.enable_x64:
         jax.config.update("jax_enable_x64", True)

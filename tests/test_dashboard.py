@@ -209,6 +209,7 @@ def test_dashboard_multi_seed_sweep_reward_chart_includes_error_bars() -> None:
 
 
 def test_dashboard_multi_seed_sweep_success_chart_includes_error_bars() -> None:
+    set_language("ru")
     base = BenchmarkConfig()
     config = replace(
         base,
@@ -220,3 +221,6 @@ def test_dashboard_multi_seed_sweep_success_chart_includes_error_bars() -> None:
 
     assert len(figure.axes[0].collections) > 0
     assert figure.axes[0].get_ylim() == (0.0, 1.0)
+    assert figure.axes[0].get_ylabel() == "Доля успеха"
+    assert figure.axes[0].get_title() == "Доля успеха и шум наблюдений"
+    set_language("en")

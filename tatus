@@ -1,0 +1,179 @@
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'neuropomdp/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'neuropomdp/dashboard/app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'neuropomdp/dashboard/i18n.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'neuropomdp/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_benchmark.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_dashboard.py', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 8eaa170..aeee469 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -224,3 +224,4 @@[m [moutputs/[m
+ outputs_*/[m
+ diag_*.txt[m
+ dist_diag.txt[m
+[32m+[m[32mNeuroPOMDP-*-windows.zip[m
+[1mdiff --git a/neuropomdp/__init__.py b/neuropomdp/__init__.py[m
+[1mindex 29bda31..c59bee4 100644[m
+[1m--- a/neuropomdp/__init__.py[m
+[1m+++ b/neuropomdp/__init__.py[m
+[36m@@ -6,7 +6,7 @@[m [mfor a partially observable decision-making benchmark.[m
+ [m
+ from __future__ import annotations[m
+ [m
+[31m-__version__ = "0.1.1"[m
+[32m+[m[32m__version__ = "0.2.0"[m
+ [m
+ from .agent import ActiveInferenceAgent[m
+ from .benchmark import benchmark_agents[m
+[1mdiff --git a/neuropomdp/dashboard/app.py b/neuropomdp/dashboard/app.py[m
+[1mindex 7acbfef..2aa52d9 100644[m
+[1m--- a/neuropomdp/dashboard/app.py[m
+[1m+++ b/neuropomdp/dashboard/app.py[m
+[36m@@ -683,7 +683,7 @@[m [mdef _agent_display(name: str) -> str:[m
+ def _belief_text(step: StepDiagnostics) -> str:[m
+     """Render current belief as compact text."""[m
+ [m
+[31m-    lines = ["Current belief:"][m
+[32m+[m[32m    lines = [t("current_belief")][m
+     for index, value in enumerate(step.belief):[m
+         lines.append(f"{state_display(index):<16} {format_probability_bar(value)} {format_float(value, 2)}")[m
+     return "\n".join(lines)[m
+[36m@@ -692,7 +692,7 @@[m [mdef _belief_text(step: StepDiagnostics) -> str:[m
+ def _probability_text(step: StepDiagnostics) -> str:[m
+     """Render action probabilities as compact text."""[m
+ [m
+[31m-    lines = ["Action probabilities:"][m
+[32m+[m[32m    lines = [t("action_probabilities")][m
+     for index, value in enumerate(step.action_probabilities):[m
+         lines.append(f"{action_display(index):<16} {format_float(value, 2)}")[m
+     return "\n".join(lines)[m
+[36m@@ -848,8 +848,8 @@[m [mdef _sweep_success_figure(result) -> plt.Figure:[m
+         else:[m
+             ax.plot(noise, y, marker="o", linewidth=2.0, label=_agent_display(agent_name))[m
+     ax.set_xlabel(t("chart_observation_noise"))[m
+[31m-    ax.set_ylabel("Success Rate")[m
+[31m-    ax.set_title("Success Rate vs Observation Noise")[m
+[32m+[m[32m    ax.set_ylabel(t("success_rate"))[m
+[32m+[m[32m    ax.set_title(t("chart_success_rate_vs_noise"))[m
+     ax.set_ylim(0.0, 1.0)[m
+     ax.grid(True, alpha=0.15)[m
+     ax.legend(frameon=False)[m
+[1mdiff --git a/neuropomdp/dashboard/i18n.py b/neuropomdp/dashboard/i18n.py[m
+[1mindex 5ed6b73..b28bd43 100644[m
+[1m--- a/neuropomdp/dashboard/i18n.py[m
+[1m+++ b/neuropomdp/dashboard/i18n.py[m
+[36m@@ -187,6 +187,7 @@[m [mTRANSLATIONS: dict[str, dict[str, str]] = {[m
+         "chart_effect_removing_epistemic": "Effect of removing epistemic value",[m
+         "chart_performance_vs_noise": "Performance vs Observation Noise",[m
+         "chart_observation_noise": "Observation noise",[m
+[32m+[m[32m        "chart_success_rate_vs_noise": "Success Rate vs Observation Noise",[m
+         "chart_info_frequency_vs_noise": "Information-Seeking Frequency vs Noise",[m
+     },[m
+     "ru": {[m
+[36m@@ -370,6 +371,7 @@[m [mTRANSLATIONS: dict[str, dict[str, str]] = {[m
+         "chart_effect_removing_epistemic": "Эффект удаления эпистемической ценности",[m
+         "chart_performance_vs_noise": "Зависимость результата от шума наблюдений",[m
+         "chart_observation_noise": "Шум наблюдений",[m
+[32m+[m[32m        "chart_success_rate_vs_noise": "Доля успеха и шум наблюдений",[m
+         "chart_info_frequency_vs_noise": "Частота поиска информации и шум",[m
+     },[m
+ }[m
+[1mdiff --git a/neuropomdp/main.py b/neuropomdp/main.py[m
+[1mindex cb0b9b0..2c71605 100644[m
+[1m--- a/neuropomdp/main.py[m
+[1m+++ b/neuropomdp/main.py[m
+[36m@@ -197,6 +197,12 @@[m [mdef _run_sweep(config: BenchmarkConfig, seeds: list[int] | None = None) -> None:[m
+     print(f"Sweep completed for {len(result.noise_values)} noise settings.")[m
+ [m
+ [m
+[32m+[m[32mdef _run_dashboard() -> int:[m
+[32m+[m[32m    from . import launcher[m
+[32m+[m
+[32m+[m[32m    return launcher.main([])[m
+[32m+[m
+[32m+[m
+ def build_parser() -> argparse.ArgumentParser:[m
+     """Create the CLI parser."""[m
+ [m
+[36m@@ -207,6 +213,7 @@[m [mdef build_parser() -> argparse.ArgumentParser:[m
+     benchmark = subparsers.add_parser("benchmark")[m
+     ablation = subparsers.add_parser("ablation")[m
+     sweep = subparsers.add_parser("sweep")[m
+[32m+[m[32m    subparsers.add_parser("dashboard")[m
+     for subparser in (demo, benchmark, ablation, sweep):[m
+         _add_common_arguments(subparser)[m
+     benchmark.add_argument([m
+[36m@@ -235,6 +242,9 @@[m [mdef main(argv: list[str] | None = None) -> int:[m
+ [m
+     parser = build_parser()[m
+     args = parser.parse_args(argv)[m
+[32m+[m[32m    if args.command == "dashboard":[m
+[32m+[m[32m        return _run_dashboard()[m
+[32m+[m
+     config = _build_config(args)[m
+     if config.env.model.enable_x64:[m
+         jax.config.update("jax_enable_x64", True)[m
+[1mdiff --git a/pyproject.toml b/pyproject.toml[m
+[1mindex 1b95fbd..60e7b2a 100644[m
+[1m--- a/pyproject.toml[m
+[1m+++ b/pyproject.toml[m
+[36m@@ -4,7 +4,7 @@[m [mbuild-backend = "setuptools.build_meta"[m
+ [m
+ [project][m
+ name = "neuropomdp"[m
+[31m-version = "0.1.1"[m
+[32m+[m[32mversion = "0.2.0"[m
+ description = "A compact discrete Active Inference benchmark for partially observable decision-making."[m
+ readme = "README.md"[m
+ requires-python = ">=3.11"[m
+[1mdiff --git a/tests/test_benchmark.py b/tests/test_benchmark.py[m
+[1mindex bb44dd3..418f0f9 100644[m
+[1m--- a/tests/test_benchmark.py[m
+[1m+++ b/tests/test_benchmark.py[m
+[36m@@ -4,6 +4,7 @@[m [mfrom dataclasses import replace[m
+ [m
+ import numpy as np[m
+ [m
+[32m+[m[32mimport neuropomdp.main as cli_main[m
+ from neuropomdp.benchmark import ([m
+     aggregate_benchmark_results,[m
+     benchmark_agents,[m
+[36m@@ -203,3 +204,16 @@[m [mdef test_cli_multi_seed_sweep_writes_effect_summary(tmp_path) -> None:[m
+     effect = effect_path.read_text(encoding="utf-8")[m
+     assert "reliably_reward_better_noise_values" in effect[m
+ [m
+[32m+[m
+[32m+[m[32mdef test_cli_dashboard_delegates_to_launcher(monkeypatch) -> None:[m
+[32m+[m[32m    calls: list[str] = [][m
+[32m+[m
+[32m+[m[32m    def fake_run_dashboard() -> int:[m
+[32m+[m[32m        calls.append("dashboard")[m
+[32m+[m[32m        return 0[m
+[32m+[m
+[32m+[m[32m    monkeypatch.setattr(cli_main, "_run_dashboard", fake_run_dashboard)[m
+[32m+[m
+[32m+[m[32m    assert cli_main.main(["dashboard"]) == 0[m
+[32m+[m[32m    assert calls == ["dashboard"][m
+[32m+[m
+[1mdiff --git a/tests/test_dashboard.py b/tests/test_dashboard.py[m
+[1mindex 8009e49..b99e34e 100644[m
+[1m--- a/tests/test_dashboard.py[m
+[1m+++ b/tests/test_dashboard.py[m
+[36m@@ -209,6 +209,7 @@[m [mdef test_dashboard_multi_seed_sweep_reward_chart_includes_error_bars() -> None:[m
+ [m
+ [m
+ def test_dashboard_multi_seed_sweep_success_chart_includes_error_bars() -> None:[m
+[32m+[m[32m    set_language("ru")[m
+     base = BenchmarkConfig()[m
+     config = replace([m
+         base,[m
+[36m@@ -220,3 +221,6 @@[m [mdef test_dashboard_multi_seed_sweep_success_chart_includes_error_bars() -> None:[m
+ [m
+     assert len(figure.axes[0].collections) > 0[m
+     assert figure.axes[0].get_ylim() == (0.0, 1.0)[m
+[32m+[m[32m    assert figure.axes[0].get_ylabel() == "Доля успеха"[m
+[32m+[m[32m    assert figure.axes[0].get_title() == "Доля успеха и шум наблюдений"[m
+[32m+[m[32m    set_language("en")[m

@@ -224,3 +224,4 @@ outputs/
 outputs_*/
 diag_*.txt
 dist_diag.txt
+NeuroPOMDP-*-windows.zip

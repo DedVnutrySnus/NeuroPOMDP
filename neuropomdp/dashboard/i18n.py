@@ -187,6 +187,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "chart_effect_removing_epistemic": "Effect of removing epistemic value",
         "chart_performance_vs_noise": "Performance vs Observation Noise",
         "chart_observation_noise": "Observation noise",
+        "chart_success_rate_vs_noise": "Success Rate vs Observation Noise",
         "chart_info_frequency_vs_noise": "Information-Seeking Frequency vs Noise",
     },
     "ru": {
@@ -370,6 +371,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "chart_effect_removing_epistemic": "Эффект удаления эпистемической ценности",
         "chart_performance_vs_noise": "Зависимость результата от шума наблюдений",
         "chart_observation_noise": "Шум наблюдений",
+        "chart_success_rate_vs_noise": "Доля успеха и шум наблюдений",
         "chart_info_frequency_vs_noise": "Частота поиска информации и шум",
     },
 }

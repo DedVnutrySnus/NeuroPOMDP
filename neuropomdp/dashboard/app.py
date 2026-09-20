@@ -683,7 +683,7 @@ def _agent_display(name: str) -> str:
 def _belief_text(step: StepDiagnostics) -> str:
     """Render current belief as compact text."""
 
-    lines = ["Current belief:"]
+    lines = [t("current_belief")]
     for index, value in enumerate(step.belief):
         lines.append(f"{state_display(index):<16} {format_probability_bar(value)} {format_float(value, 2)}")
     return "\n".join(lines)
@@ -692,7 +692,7 @@ def _belief_text(step: StepDiagnostics) -> str:
 def _probability_text(step: StepDiagnostics) -> str:
     """Render action probabilities as compact text."""
 
-    lines = ["Action probabilities:"]
+    lines = [t("action_probabilities")]
     for index, value in enumerate(step.action_probabilities):
         lines.append(f"{action_display(index):<16} {format_float(value, 2)}")
     return "\n".join(lines)
@@ -848,8 +848,8 @@ def _sweep_success_figure(result) -> plt.Figure:
         else:
             ax.plot(noise, y, marker="o", linewidth=2.0, label=_agent_display(agent_name))
     ax.set_xlabel(t("chart_observation_noise"))
-    ax.set_ylabel("Success Rate")
-    ax.set_title("Success Rate vs Observation Noise")
+    ax.set_ylabel(t("success_rate"))
+    ax.set_title(t("chart_success_rate_vs_noise"))
     ax.set_ylim(0.0, 1.0)
     ax.grid(True, alpha=0.15)
     ax.legend(frameon=False)
